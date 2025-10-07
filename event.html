@@ -178,14 +178,13 @@
               </div>
               <div class="mb-3">
                 <label for="rsvp-messagebox" class="form-label">Message or Comments</label>
-                <textarea class="form-control" id="rsvp-messagebox" name="message" rows="3" placeholder="Write something about the event..."></textarea>
+                <textarea class="form-control" id="rsvp-messagebox" name="message" rows="3"></textarea>
               </div>
               <button type="submit" class="btn btn-primary">Reserve Spot</button>
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message"></div>
             </form>
-            <div id="rsvp-message" class="mt-2"></div>
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message"></div>
           </div>
         </div>
       </div>
@@ -218,7 +217,6 @@
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/typed.js/typed.umd.js"></script>
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
