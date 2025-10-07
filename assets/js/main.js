@@ -244,42 +244,73 @@
 })();
 
 (function() {
-  emailjs.init("2hRf0qfR3oYARdbEV"); // Replace with your EmailJS user ID
+  emailjs.init("2hRf0qfR3oYARdbEV"); // Your EmailJS public key
 })();
 
-document.getElementById('rsvp-form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  emailjs.sendForm('service_9xodu0h', 'template_1s4y146', this)
-  .then(function() {
-    document.getElementById('rsvp-message').textContent = "Thank you! Your RSVP has been sent.";
-  }, function(error) {
-  document.getElementById('rsvp-message').textContent = "Error sending RSVP. Please try again.";
+// RSVP Form Handler
+const rsvpForm = document.getElementById('rsvp-form');
+if (rsvpForm) {
+  rsvpForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Show loading indicator
+    const loading = document.querySelector('#rsvp-form .loading');
+    const errorMsg = document.querySelector('#rsvp-form .error-message');
+    const sentMsg = document.querySelector('#rsvp-form .sent-message');
+
+    if (loading) loading.style.display = 'block';
+    if (errorMsg) errorMsg.style.display = 'none';
+    if (sentMsg) sentMsg.style.display = 'none';
+
+    emailjs.sendForm('service_9xodu0h', 'template_1s4y146', this)
+      .then(function() {
+        if (loading) loading.style.display = 'none';
+        if (sentMsg) {
+          sentMsg.textContent = "Thank you! Your RSVP has been sent.";
+          sentMsg.style.display = 'block';
+        }
+        rsvpForm.reset();
+      }, function(error) {
+        if (loading) loading.style.display = 'none';
+        if (errorMsg) {
+          errorMsg.textContent = "Error sending RSVP. Please try again.";
+          errorMsg.style.display = 'block';
+        }
+        console.error("EmailJS RSVP Error:", error);
+      });
   });
-});
+}
 
-(function() {
-  emailjs.init("2hRf0qfR3oYARdbEV"); // Replace with your EmailJS public key
-})();
-
+// Contact Form Handler
 const contactForm = document.getElementById("contact-form");
 if (contactForm) {
   contactForm.addEventListener("submit", function(e) {
     e.preventDefault();
 
-    document.querySelector('.loading').style.display = 'block';
-    document.querySelector('.error-message').style.display = 'none';
-    document.querySelector('.sent-message').style.display = 'none';
+    // Show loading indicator
+    const loading = document.querySelector('#contact-form .loading');
+    const errorMsg = document.querySelector('#contact-form .error-message');
+    const sentMsg = document.querySelector('#contact-form .sent-message');
+
+    if (loading) loading.style.display = 'block';
+    if (errorMsg) errorMsg.style.display = 'none';
+    if (sentMsg) sentMsg.style.display = 'none';
 
     emailjs.sendForm("service_j0ppsni", "template_jp6lxvc", this)
       .then(() => {
-        document.querySelector('.loading').style.display = 'none';
-        document.querySelector('.sent-message').style.display = 'block';
+        if (loading) loading.style.display = 'none';
+        if (sentMsg) {
+          sentMsg.textContent = "Your message has been sent. Thank you!";
+          sentMsg.style.display = 'block';
+        }
         contactForm.reset();
       }, (error) => {
-        document.querySelector('.loading').style.display = 'none';
-        document.querySelector('.error-message').textContent = "❌ Failed to send message. Try again.";
-        document.querySelector('.error-message').style.display = 'block';
-        console.error("EmailJS Error:", error);
+        if (loading) loading.style.display = 'none';
+        if (errorMsg) {
+          errorMsg.textContent = "❌ Failed to send message. Try again.";
+          errorMsg.style.display = 'block';
+        }
+        console.error("EmailJS Contact Error:", error);
       });
   });
 }
