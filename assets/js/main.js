@@ -241,76 +241,75 @@
   const message = document.getElementById('rsvp-messagebox').value;
   rsvpMsg.textContent = `Thank you, ${name}! Your spot as a ${role} has been reserved. Status: ${status}. Message: ${message}`;
 
+  // Initialize EmailJS ONCE
+  emailjs.init("2hRf0qfR3oYARdbEV");
+
+  // RSVP Form Handler
+  const rsvpForm = document.getElementById('rsvp-form');
+  if (rsvpForm) {
+    rsvpForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Show loading indicator
+      const loading = rsvpForm.querySelector('.loading');
+      const errorMsg = rsvpForm.querySelector('.error-message');
+      const sentMsg = rsvpForm.querySelector('.sent-message');
+
+      if (loading) loading.style.display = 'block';
+      if (errorMsg) errorMsg.style.display = 'none';
+      if (sentMsg) sentMsg.style.display = 'none';
+
+      emailjs.sendForm('service_9xodu0h', 'template_1s4y146', this)
+        .then(function() {
+          if (loading) loading.style.display = 'none';
+          if (sentMsg) {
+            sentMsg.textContent = "Thank you! Your RSVP has been sent.";
+            sentMsg.style.display = 'block';
+          }
+          rsvpForm.reset();
+        }, function(error) {
+          if (loading) loading.style.display = 'none';
+          if (errorMsg) {
+            errorMsg.textContent = "Error sending RSVP. Please try again.";
+            errorMsg.style.display = 'block';
+          }
+          console.error("EmailJS RSVP Error:", error);
+        });
+    });
+  }
+
+  // Contact Form Handler
+  const contactForm = document.getElementById("contact-form");
+  if (contactForm) {
+    contactForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      // Show loading indicator
+      const loading = contactForm.querySelector('.loading');
+      const errorMsg = contactForm.querySelector('.error-message');
+      const sentMsg = contactForm.querySelector('.sent-message');
+
+      if (loading) loading.style.display = 'block';
+      if (errorMsg) errorMsg.style.display = 'none';
+      if (sentMsg) sentMsg.style.display = 'none';
+
+      emailjs.sendForm("service_j0ppsni", "template_jp6lxvc", this)
+        .then(() => {
+          if (loading) loading.style.display = 'none';
+          if (sentMsg) {
+            sentMsg.textContent = "Your message has been sent. Thank you!";
+            sentMsg.style.display = 'block';
+          }
+          contactForm.reset();
+        }, (error) => {
+          if (loading) loading.style.display = 'none';
+          if (errorMsg) {
+            errorMsg.textContent = "❌ Failed to send message. Try again.";
+            errorMsg.style.display = 'block';
+          }
+          console.error("EmailJS Contact Error:", error);
+        });
+    });
+  }
+
 })();
-
-(function() {
-  emailjs.init("2hRf0qfR3oYARdbEV"); // Your EmailJS public key
-})();
-
-// RSVP Form Handler
-const rsvpForm = document.getElementById('rsvp-form');
-if (rsvpForm) {
-  rsvpForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Show loading indicator
-    const loading = document.querySelector('#rsvp-form .loading');
-    const errorMsg = document.querySelector('#rsvp-form .error-message');
-    const sentMsg = document.querySelector('#rsvp-form .sent-message');
-
-    if (loading) loading.style.display = 'block';
-    if (errorMsg) errorMsg.style.display = 'none';
-    if (sentMsg) sentMsg.style.display = 'none';
-
-    emailjs.sendForm('service_9xodu0h', 'template_1s4y146', this)
-      .then(function() {
-        if (loading) loading.style.display = 'none';
-        if (sentMsg) {
-          sentMsg.textContent = "Thank you! Your RSVP has been sent.";
-          sentMsg.style.display = 'block';
-        }
-        rsvpForm.reset();
-      }, function(error) {
-        if (loading) loading.style.display = 'none';
-        if (errorMsg) {
-          errorMsg.textContent = "Error sending RSVP. Please try again.";
-          errorMsg.style.display = 'block';
-        }
-        console.error("EmailJS RSVP Error:", error);
-      });
-  });
-}
-
-// Contact Form Handler
-const contactForm = document.getElementById("contact-form");
-if (contactForm) {
-  contactForm.addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    // Show loading indicator
-    const loading = document.querySelector('#contact-form .loading');
-    const errorMsg = document.querySelector('#contact-form .error-message');
-    const sentMsg = document.querySelector('#contact-form .sent-message');
-
-    if (loading) loading.style.display = 'block';
-    if (errorMsg) errorMsg.style.display = 'none';
-    if (sentMsg) sentMsg.style.display = 'none';
-
-    emailjs.sendForm("service_j0ppsni", "template_jp6lxvc", this)
-      .then(() => {
-        if (loading) loading.style.display = 'none';
-        if (sentMsg) {
-          sentMsg.textContent = "Your message has been sent. Thank you!";
-          sentMsg.style.display = 'block';
-        }
-        contactForm.reset();
-      }, (error) => {
-        if (loading) loading.style.display = 'none';
-        if (errorMsg) {
-          errorMsg.textContent = "❌ Failed to send message. Try again.";
-          errorMsg.style.display = 'block';
-        }
-        console.error("EmailJS Contact Error:", error);
-      });
-  });
-}
