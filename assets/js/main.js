@@ -258,7 +258,7 @@ document.getElementById('rsvp-form').addEventListener('submit', function(e) {
 });
 
 (function() {
-  emailjs.init("2hRf0qfR3oYARdbEV"); // from EmailJS dashboard
+  emailjs.init("2hRf0qfR3oYARdbEV"); // Replace with your EmailJS public key
 })();
 
 const contactForm = document.getElementById("contact-form");
@@ -266,12 +266,11 @@ if (contactForm) {
   contactForm.addEventListener("submit", function(e) {
     e.preventDefault();
 
-    // Show loading indicator
     document.querySelector('.loading').style.display = 'block';
     document.querySelector('.error-message').style.display = 'none';
     document.querySelector('.sent-message').style.display = 'none';
 
-    emailjs.sendForm("service_9xodu0h", "template_jp6lxvc", this)
+    emailjs.sendForm("service_j0ppsni", "template_jp6lxvc", this)
       .then(() => {
         document.querySelector('.loading').style.display = 'none';
         document.querySelector('.sent-message').style.display = 'block';
