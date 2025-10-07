@@ -226,4 +226,61 @@
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
 
+  // Add event navigation for Event link
+  document.querySelectorAll('.navmenu a').forEach(link => {
+    link.addEventListener('click', function(e) {
+      if (link.getAttribute('href') === '#event') {
+        e.preventDefault();
+        window.location.href = 'event.html';
+      }
+      // All other links keep their default behavior
+    });
+  });
+
+  const status = document.getElementById('rsvp-status').value;
+  const message = document.getElementById('rsvp-messagebox').value;
+  rsvpMsg.textContent = `Thank you, ${name}! Your spot as a ${role} has been reserved. Status: ${status}. Message: ${message}`;
+
 })();
+
+(function() {
+  emailjs.init("2hRf0qfR3oYARdbEV"); // Replace with your EmailJS user ID
+})();
+
+document.getElementById('rsvp-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  emailjs.sendForm('service_9xodu0h', 'template_1s4y146', this)
+  .then(function() {
+    document.getElementById('rsvp-message').textContent = "Thank you! Your RSVP has been sent.";
+  }, function(error) {
+  document.getElementById('rsvp-message').textContent = "Error sending RSVP. Please try again.";
+  });
+});
+
+(function() {
+  emailjs.init("2hRf0qfR3oYARdbEV"); // from EmailJS dashboard
+})();
+
+const contactForm = document.getElementById("contact-form");
+if (contactForm) {
+  contactForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    // Show loading indicator
+    document.querySelector('.loading').style.display = 'block';
+    document.querySelector('.error-message').style.display = 'none';
+    document.querySelector('.sent-message').style.display = 'none';
+
+    emailjs.sendForm("service_9xodu0h", "template_jp6lxvc", this)
+      .then(() => {
+        document.querySelector('.loading').style.display = 'none';
+        document.querySelector('.sent-message').style.display = 'block';
+        contactForm.reset();
+      }, (error) => {
+        document.querySelector('.loading').style.display = 'none';
+        document.querySelector('.error-message').textContent = "❌ Failed to send message. Try again.";
+        document.querySelector('.error-message').style.display = 'block';
+        console.error("EmailJS Error:", error);
+      });
+  });
+}
