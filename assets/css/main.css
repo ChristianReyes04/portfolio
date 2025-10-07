@@ -2171,7 +2171,7 @@ section,
 }
 
 .contact .contact-form {
-  background-color: var(--surface-color);
+  background-color: var(--surface-color) !important;
   padding: 3rem;
   border-radius: 1rem;
   height: 100%;
@@ -2206,7 +2206,7 @@ section,
   border-color: color-mix(in srgb, var(--default-color), transparent 90%);
   border-radius: 0.5rem;
   background-color: color-mix(in srgb, var(--surface-color) 90%, white 5%);
-  color: var(--default-color);
+  color: var(--default-color) !important;
 }
 
 .contact .contact-form .form-control:focus,
