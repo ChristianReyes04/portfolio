@@ -237,20 +237,16 @@
     });
   });
 
-  const status = document.getElementById('rsvp-status').value;
-  const message = document.getElementById('rsvp-messagebox').value;
-  rsvpMsg.textContent = `Thank you, ${name}! Your spot as a ${role} has been reserved. Status: ${status}. Message: ${message}`;
-
   // Initialize EmailJS ONCE
   emailjs.init("2hRf0qfR3oYARdbEV");
 
   // RSVP Form Handler
   const rsvpForm = document.getElementById('rsvp-form');
+
   if (rsvpForm) {
     rsvpForm.addEventListener('submit', function(e) {
       e.preventDefault();
 
-      // Show loading indicator
       const loading = rsvpForm.querySelector('.loading');
       const errorMsg = rsvpForm.querySelector('.error-message');
       const sentMsg = rsvpForm.querySelector('.sent-message');
@@ -259,7 +255,7 @@
       if (errorMsg) errorMsg.style.display = 'none';
       if (sentMsg) sentMsg.style.display = 'none';
 
-      emailjs.sendForm('service_9xodu0h', 'template_1s4y146', this)
+      emailjs.sendForm('service_gsy64xe', 'template_1s4y146', this)
         .then(function() {
           if (loading) loading.style.display = 'none';
           if (sentMsg) {
@@ -284,7 +280,7 @@
     contactForm.addEventListener("submit", function(e) {
       e.preventDefault();
 
-      // Show loading indicator
+      // Target feedback elements inside the form
       const loading = contactForm.querySelector('.loading');
       const errorMsg = contactForm.querySelector('.error-message');
       const sentMsg = contactForm.querySelector('.sent-message');
